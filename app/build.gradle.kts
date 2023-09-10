@@ -58,13 +58,11 @@ dependencies {
 
     implementation ("androidx.work:work-runtime-ktx:2.8.1")
 
-  /*  implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
 
-    // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:$roomVersion")
     // To use Kotlin Symbol Processing (KSP)
-    ksp("androidx.room:room-compiler:$roomVersion")*/
+    ksp("androidx.room:room-compiler:$roomVersion")
 
     implementation ("com.google.dagger:hilt-android:2.44")
     kapt ("com.google.dagger:hilt-android-compiler:2.44")

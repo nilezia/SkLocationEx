@@ -1,7 +1,5 @@
 package example.lizardo.sklocationex.data.repository
 
-import com.google.gson.Gson
-import example.lizardo.sklocationex.data.model.Location
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -12,12 +10,12 @@ import javax.inject.Inject
 
 interface SocketServiceRepository {
 
-    fun sendDataToTCPSocket(location: Location): Flow<String>
+    fun sendDataToTCPSocket(locationData: String): Flow<String>
 }
 
 class SocketServiceRepositoryImpl @Inject constructor() : SocketServiceRepository {
-    override fun sendDataToTCPSocket(location: Location): Flow<String> {
-        return sendDataToServer(Gson().toJson(location))
+    override fun sendDataToTCPSocket(locationData: String): Flow<String> {
+        return sendDataToServer(locationData)
     }
 
     private fun sendDataToServer(data: String): Flow<String> = flow {
@@ -37,20 +35,11 @@ class SocketServiceRepositoryImpl @Inject constructor() : SocketServiceRepositor
             socket.close()
 
             // Emit a success message
-            emit("$data")
+            emit(data)
         } catch (e: Exception) {
             // Handle any exceptions that may occur
             emit("Error: ${e.message}")
         }
     }
         .flowOn(Dispatchers.IO)
-
-    /*fun main() = runBlocking {
-        val dataToSend = "Hello, TCP Server!"
-
-        sendDataToServer(dataToSend).collect { result ->
-            println(result)
-        }
-    }*/
-
 }

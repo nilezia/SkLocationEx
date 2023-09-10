@@ -33,10 +33,7 @@ class BaseLocationClient(
             val locationManager =
                 context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             val isGpsEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-            val isNetWorkEnable =
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-
-            if (!isGpsEnable && !isNetWorkEnable) {
+            if (!isGpsEnable) {
                 throw LocationClient.LocationException("GPS is not enable")
             }
             val locationRequest =

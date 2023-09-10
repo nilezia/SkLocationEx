@@ -1,6 +1,7 @@
-package example.lizardo.sklocationex
+package example.lizardo.sklocationex.presentation
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -8,7 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import dagger.hilt.android.AndroidEntryPoint
 import example.lizardo.sklocationex.databinding.ActivityMainBinding
-import example.lizardo.sklocationex.presentation.LocationViewModel
+import example.lizardo.sklocationex.service.LocationService
+import example.lizardo.sklocationex.service.SendDataService
 
 
 @AndroidEntryPoint
@@ -22,32 +24,46 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initViewModel()
-        //  startService(Intent(this,LocationService::class.java))
+        initView()
+
+
         ActivityCompat.requestPermissions(
             this, arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
-            ),0
+            ), 0
         )
-        viewModel.sendSocket()
+
+    }
+
+    private fun initView() {
+        binding.startButton.setOnClickListener {
+            startService(Intent(this, LocationService::class.java).apply {
+               action = LocationService.ACTION_START
+            })
+            startService(Intent(this, SendDataService::class.java))
+
+        }
+        binding.stopButton.setOnClickListener {
+            startService(Intent(this, LocationService::class.java).apply {
+                action = LocationService.ACTION_STOP
+            })
+        }
     }
 
     private fun initViewModel() {
-        viewModel.onSocketStatus.observe(this) {
-            Log.d("testSocket", "$it")
+        //ToDo: For future
+        /*viewModel.onSocketStatus.observe(this) {
+
         }
 
         viewModel.onUpdateLocation.observe(this) {
-            Log.d("testSocket", "${it.latitude}, ${it.longitude}")
-            viewModel.sendSocket()
-        }
+
+
+        }*/
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        //locationManager.startLocationUpdates()
-    }
 
     override fun onStop() {
         super.onStop()

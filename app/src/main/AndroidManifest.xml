@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -21,9 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SkLocationEx"
         tools:targetApi="31">
-        <service android:name=".LocationService" android:exported="false" />
+        <service android:name=".service.LocationService" android:exported="false" />
+        <service android:name=".service.SendDataService" android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
