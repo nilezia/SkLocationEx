@@ -69,7 +69,7 @@ class LocationService :
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        locationManager.getLocationUpdate(15000L)
+        locationManager.getLocationUpdate(30000L)
             .catch {}
             .onEach {
                 Log.d("LocationService", "${it.latitude}, ${it.longitude}")
