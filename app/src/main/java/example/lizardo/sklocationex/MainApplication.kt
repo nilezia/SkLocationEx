@@ -14,7 +14,7 @@ class MainApplication : Application() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChanel = NotificationChannel(
-                "Location", "Location", NotificationManager.IMPORTANCE_LOW
+                "location", "Location", NotificationManager.IMPORTANCE_LOW
             )
             val notificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

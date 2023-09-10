@@ -60,7 +60,7 @@ class LocationService :
     }
 
     private fun start() {
-        val notification = NotificationCompat.Builder(this, "Location")
+        val notification = NotificationCompat.Builder(this, "location")
             .setSettingsText("running location...")
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setOngoing(true)
@@ -88,7 +88,6 @@ class LocationService :
                 notificationManager.notify(1, updateNotification.build())
             }.launchIn(serviceScope)
         startForeground(1, notification.build())
-
     }
 
     private fun stop() {
@@ -103,12 +102,6 @@ class LocationService :
             jsonData = packData
         )
         locationDao.insertAll(locationData)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        serviceScope.cancel()
-        stopSelf()
     }
 
     companion object {
