@@ -1,23 +1,29 @@
 package example.lizardo.sklocationex.domain
 
-import example.lizardo.sklocationex.data.model.Location
-import example.lizardo.sklocationex.data.repository.SocketServiceRepository
+import android.content.Context
+import android.content.Intent
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
+import example.lizardo.sklocationex.LocationService
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 interface SendDataToSocketUseCase {
-    fun execute(location: Location): Flow<String>
+    fun execute(): Flow<String>
 }
 
-class SendDataToSocketUseCaseImpl @Inject constructor(private var socketServiceRepository: SocketServiceRepository) :
+class SendDataToSocketUseCaseImpl @Inject constructor(
+    @ApplicationContext private var context: Context
+) :
     SendDataToSocketUseCase {
-    override fun execute(location: Location): Flow<String> {
+    override fun execute(): Flow<String> {
+        val intent = Intent(context, LocationService::class.java)
+        context.startService(intent)
         return flow {
-            socketServiceRepository.sendDataToTCPSocket(location).collect{
-                emit(it)
-            }
+            /*socketServiceRepository.sendDataToTCPSocket(location).collect {}*/
+                emit("test")
+
         }
     }
 }

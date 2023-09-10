@@ -8,13 +8,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import java.io.OutputStream
 import java.net.Socket
-import java.net.SocketImpl
 import javax.inject.Inject
 
 interface SocketServiceRepository {
 
     fun sendDataToTCPSocket(location: Location): Flow<String>
-
 }
 
 class SocketServiceRepositoryImpl @Inject constructor() : SocketServiceRepository {
@@ -45,6 +43,7 @@ class SocketServiceRepositoryImpl @Inject constructor() : SocketServiceRepositor
             emit("Error: ${e.message}")
         }
     }
+        .flowOn(Dispatchers.IO)
 
     /*fun main() = runBlocking {
         val dataToSend = "Hello, TCP Server!"

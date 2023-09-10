@@ -29,9 +29,9 @@ class LocationViewModel @Inject constructor(
         }
     }
 
-    fun sendSocket(location: Location) {
+    fun sendSocket() {
         viewModelScope.launch {
-            sendSocketUseCase.execute(location).flowOn(Dispatchers.IO).catch { }.collect {
+            sendSocketUseCase.execute().flowOn(Dispatchers.IO).catch { }.collect {
                 onSocketStatus.value = it
             }
         }
