@@ -15,57 +15,32 @@ import example.lizardo.sklocationex.service.SendDataService
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    private val viewModel: LocationViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initViewModel()
         initView()
-
-
         ActivityCompat.requestPermissions(
             this, arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ), 0
         )
-
     }
 
     private fun initView() {
         binding.startButton.setOnClickListener {
             startService(Intent(this, LocationService::class.java).apply {
-               action = LocationService.ACTION_START
+                action = LocationService.ACTION_START
             })
             startService(Intent(this, SendDataService::class.java))
-
         }
         binding.stopButton.setOnClickListener {
             startService(Intent(this, LocationService::class.java).apply {
                 action = LocationService.ACTION_STOP
             })
         }
-    }
-
-    private fun initViewModel() {
-        //ToDo: For future
-        /*viewModel.onSocketStatus.observe(this) {
-
-        }
-
-        viewModel.onUpdateLocation.observe(this) {
-
-
-        }*/
-
-    }
-
-
-    override fun onStop() {
-        super.onStop()
     }
 }
